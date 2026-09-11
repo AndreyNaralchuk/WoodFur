@@ -1,0 +1,2135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WoodFur — Pure Solid Wood Furniture</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --wood-dark: #3B2314;
+            --wood-medium: #6B4226;
+            --wood-light: #A0714F;
+            --wood-pale: #D4B896;
+            --wood-cream: #F5EDE3;
+            --accent: #C8956C;
+            --accent-hover: #B07A52;
+            --green-accent: #4A7C59;
+            --bg: #FAF7F2;
+            --text: #2C1810;
+            --text-secondary: #6B5B4F;
+            --glass-bg: rgba(255, 255, 255, 0.55);
+            --glass-border: rgba(255, 255, 255, 0.45);
+            --glass-shadow: 0 8px 32px rgba(59, 35, 20, 0.08);
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Wood grain texture overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 80px,
+                    rgba(160, 113, 79, 0.015) 80px,
+                    rgba(160, 113, 79, 0.015) 81px
+                ),
+                repeating-linear-gradient(
+                    87deg,
+                    transparent,
+                    transparent 120px,
+                    rgba(107, 66, 38, 0.01) 120px,
+                    rgba(107, 66, 38, 0.01) 121px
+                );
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ========== NAVBAR ========== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 16px 0;
+            transition: all 0.4s ease;
+        }
+
+        .navbar.scrolled {
+            background: rgba(250, 247, 242, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 10px 0;
+        }
+
+        .navbar .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--wood-dark);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--wood-dark);
+        }
+
+        .nav-cta {
+            background: var(--wood-dark);
+            color: #fff !important;
+            padding: 10px 24px;
+            border-radius: 100px;
+            font-weight: 600;
+            transition: all 0.3s ease !important;
+        }
+
+        .nav-cta:hover {
+            background: var(--wood-medium);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(59, 35, 20, 0.2);
+        }
+
+        /* ========== HERO ========== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 120px 0 80px;
+            position: relative;
+        }
+
+        .hero-bg-gradient {
+            position: absolute;
+            top: -20%;
+            right: -10%;
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(200, 149, 108, 0.15) 0%, rgba(245, 237, 227, 0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero-bg-gradient-2 {
+            position: absolute;
+            bottom: -10%;
+            left: -5%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(74, 124, 89, 0.08) 0%, rgba(245, 237, 227, 0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-content {
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            padding: 8px 16px;
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--green-accent);
+            margin-bottom: 24px;
+        }
+
+        .hero-badge-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--green-accent);
+            border-radius: 50%;
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .hero h1 {
+            font-size: 52px;
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -1.5px;
+            color: var(--wood-dark);
+            margin-bottom: 20px;
+        }
+
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, var(--accent), var(--wood-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 12px;
+            max-width: 520px;
+        }
+
+        .hero-discount {
+            display: inline-block;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--green-accent);
+            background: rgba(74, 124, 89, 0.08);
+            padding: 6px 14px;
+            border-radius: 8px;
+            margin-bottom: 32px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--wood-dark);
+            color: #fff;
+            padding: 16px 32px;
+            border-radius: 100px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary:hover {
+            background: var(--wood-medium);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(59, 35, 20, 0.25);
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            color: var(--wood-dark);
+            padding: 16px 32px;
+            border-radius: 100px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            border: 1px solid var(--glass-border);
+            cursor: pointer;
+            transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.8);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(59, 35, 20, 0.1);
+            border-color: var(--accent);
+        }
+
+        .hero-microcopy {
+            font-size: 13px;
+            color: var(--text-secondary);
+            opacity: 0.7;
+            max-width: 400px;
+        }
+
+        .hero-visual {
+            position: relative;
+        }
+
+        .hero-image-wrapper {
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--wood-pale), var(--wood-cream));
+            aspect-ratio: 4/3;
+            box-shadow: 0 20px 60px rgba(59, 35, 20, 0.12);
+        }
+
+        .hero-image-wrapper::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(107, 66, 38, 0.03) 2px,
+                    rgba(107, 66, 38, 0.03) 4px
+                );
+            z-index: 1;
+        }
+
+        .hero-image-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 12px;
+            color: var(--wood-medium);
+        }
+
+        .hero-image-placeholder svg {
+            width: 80px;
+            height: 80px;
+            opacity: 0.5;
+        }
+
+        .hero-image-placeholder span {
+            font-size: 14px;
+            font-weight: 500;
+            opacity: 0.6;
+        }
+
+        .floating-card {
+            position: absolute;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 16px 20px;
+            box-shadow: var(--glass-shadow);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-card-1 {
+            bottom: -20px;
+            left: -30px;
+            animation-delay: 0s;
+        }
+
+        .floating-card-2 {
+            top: 20px;
+            right: -20px;
+            animation-delay: 2s;
+        }
+
+        .floating-card .fc-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 8px;
+            font-size: 18px;
+        }
+
+        .floating-card .fc-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-bottom: 2px;
+        }
+
+        .floating-card .fc-value {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--wood-dark);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* ========== SECTION SHARED ========== */
+        section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 16px;
+        }
+
+        .section-label::before {
+            content: '';
+            width: 24px;
+            height: 2px;
+            background: var(--accent);
+            border-radius: 1px;
+        }
+
+        .section-title {
+            font-size: 40px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            line-height: 1.15;
+            color: var(--wood-dark);
+            margin-bottom: 16px;
+        }
+
+        .section-desc {
+            font-size: 17px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            line-height: 1.7;
+        }
+
+        /* ========== PAINS SECTION ========== */
+        .pains-section {
+            background: linear-gradient(180deg, var(--bg) 0%, rgba(59, 35, 20, 0.03) 100%);
+        }
+
+        .pains-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .pains-header .section-desc {
+            margin: 0 auto;
+        }
+
+        .pains-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .pain-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 36px 30px;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pain-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #c0392b, #e74c3c);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .pain-card:hover::before {
+            opacity: 1;
+        }
+
+        .pain-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 48px rgba(192, 57, 43, 0.1);
+            border-color: rgba(192, 57, 43, 0.2);
+        }
+
+        .pain-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: rgba(192, 57, 43, 0.08);
+            color: #c0392b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .pain-card h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--wood-dark);
+            margin-bottom: 8px;
+        }
+
+        .pain-scenario {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 12px;
+            font-style: italic;
+        }
+
+        .pain-consequence {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            padding-left: 12px;
+            border-left: 2px solid rgba(192, 57, 43, 0.3);
+        }
+
+        .pain-consequence strong {
+            color: #c0392b;
+            font-weight: 600;
+        }
+
+        /* ========== SOLUTIONS SECTION ========== */
+        .solutions-section {
+            background: var(--bg);
+        }
+
+        .solutions-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .solutions-header .section-desc {
+            margin: 0 auto;
+        }
+
+        .solutions-list {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .solution-card {
+            display: grid;
+            grid-template-columns: 60px 1fr;
+            gap: 24px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 32px;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            align-items: start;
+        }
+
+        .solution-card:hover {
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 0 12px 40px rgba(74, 124, 89, 0.1);
+            border-color: rgba(74, 124, 89, 0.3);
+        }
+
+        .solution-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            background: rgba(74, 124, 89, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .solution-content h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--wood-dark);
+            margin-bottom: 8px;
+        }
+
+        .solution-content p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .solution-arrow {
+            color: var(--green-accent);
+            font-weight: 600;
+        }
+
+        /* ========== OFFER SECTION ========== */
+        .offer-section {
+            background: linear-gradient(180deg, var(--bg) 0%, rgba(200, 149, 108, 0.06) 100%);
+        }
+
+        .offer-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .offer-header .section-title {
+            max-width: 800px;
+            margin: 0 auto 16px;
+        }
+
+        .offer-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            margin-bottom: 48px;
+        }
+
+        .offer-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 36px;
+            transition: all 0.4s ease;
+        }
+
+        .offer-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--glass-shadow);
+        }
+
+        .offer-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--wood-dark);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .offer-card h3 .icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .offer-items {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .offer-items li {
+            display: flex;
+            gap: 12px;
+            align-items: start;
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .offer-items li .check {
+            flex-shrink: 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: rgba(74, 124, 89, 0.1);
+            color: var(--green-accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            margin-top: 2px;
+        }
+
+        .deadline-card {
+            background: linear-gradient(135deg, rgba(200, 149, 108, 0.1), rgba(200, 149, 108, 0.05));
+            border: 1px solid rgba(200, 149, 108, 0.3);
+        }
+
+        .deadline-card h3 {
+            color: var(--accent-hover);
+        }
+
+        .deadline-highlight {
+            background: rgba(200, 149, 108, 0.1);
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin-top: 16px;
+            font-size: 13px;
+            color: var(--wood-medium);
+            font-weight: 500;
+        }
+
+        .guarantee-section {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .guarantee-card {
+            background: linear-gradient(135deg, rgba(74, 124, 89, 0.06), rgba(74, 124, 89, 0.02));
+            border: 1px solid rgba(74, 124, 89, 0.2);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .guarantee-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(74, 124, 89, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .guarantee-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(74, 124, 89, 0.1);
+            color: var(--green-accent);
+            padding: 8px 18px;
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .guarantee-card h3 {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--wood-dark);
+            margin-bottom: 16px;
+        }
+
+        .guarantee-card p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ========== PRODUCTS SECTION ========== */
+        .products-section {
+            background: linear-gradient(180deg, var(--bg) 0%, rgba(107, 66, 38, 0.04) 100%);
+        }
+
+        .products-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .products-header .section-desc {
+            margin: 0 auto;
+        }
+
+        .products-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .product-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: row;
+            align-items: stretch;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .product-card:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .product-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 48px rgba(59, 35, 20, 0.12);
+            border-color: rgba(200, 149, 108, 0.3);
+        }
+
+        .product-image-placeholder {
+            position: relative;
+            flex: 0 0 45%;
+            background: linear-gradient(135deg, var(--wood-pale), var(--wood-cream));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .product-image-placeholder::after {
+            content: 'Product Photo';
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--wood-medium);
+            opacity: 0.5;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            position: absolute;
+            inset: 0;
+        }
+
+        .product-body {
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .product-category {
+            display: inline-flex;
+            align-self: flex-start;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--accent-hover);
+            background: rgba(200, 149, 108, 0.1);
+            padding: 5px 12px;
+            border-radius: 100px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 14px;
+        }
+
+        .product-card h3 {
+            font-size: 19px;
+            font-weight: 700;
+            color: var(--wood-dark);
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        .product-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 18px;
+        }
+
+        .product-features {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .product-features li {
+            display: flex;
+            gap: 10px;
+            font-size: 13.5px;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+
+        .product-features li strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .product-features li .check {
+            flex-shrink: 0;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: rgba(74, 124, 89, 0.1);
+            color: var(--green-accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            margin-top: 2px;
+        }
+
+        .product-specs {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 16px;
+            background: rgba(59, 35, 20, 0.03);
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .product-specs li {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .product-specs li strong {
+            color: var(--wood-dark);
+            font-weight: 600;
+        }
+
+        .product-dropdown {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .product-dropdown-inner {
+            overflow: hidden;
+            min-height: 0;
+        }
+
+        .product-card:hover .product-dropdown,
+        .product-card:focus-within .product-dropdown {
+            grid-template-rows: 1fr;
+        }
+
+        .product-footer {
+            margin-top: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .product-price {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--wood-dark);
+        }
+
+        .product-price del {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            opacity: 0.6;
+            margin-right: 8px;
+        }
+
+        .product-price small {
+            display: block;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--green-accent);
+            margin-top: 2px;
+        }
+
+        .product-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--wood-dark);
+            color: #fff;
+            padding: 12px 22px;
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .product-cta:hover {
+            background: var(--wood-medium);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px rgba(59, 35, 20, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .product-card,
+            .product-card:nth-child(even) {
+                flex-direction: column;
+            }
+
+            .product-image-placeholder {
+                flex: none;
+                width: 100%;
+                aspect-ratio: 16/10;
+            }
+
+            .product-footer {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        /* ========== FINAL CTA ========== */
+        .final-cta {
+            padding: 100px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .final-cta-bg {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, var(--bg), rgba(200, 149, 108, 0.08));
+            pointer-events: none;
+        }
+
+        .final-cta .container {
+            position: relative;
+        }
+
+        .final-cta-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 28px;
+            padding: 64px 48px;
+            max-width: 700px;
+            margin: 0 auto;
+            box-shadow: 0 20px 60px rgba(59, 35, 20, 0.08);
+        }
+
+        .final-cta h3 {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--wood-dark);
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        .final-cta .hero-buttons {
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+
+        .final-cta .hero-microcopy {
+            margin: 0 auto;
+        }
+
+        /* ========== FOOTER ========== */
+        .footer {
+            padding: 40px 0;
+            border-top: 1px solid rgba(59, 35, 20, 0.06);
+            text-align: center;
+        }
+
+        .footer p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            opacity: 0.6;
+        }
+
+        /* ========== ANIMATIONS ========== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-40px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .reveal-left.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(40px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .reveal-right.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .reveal-scale.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Parallax */
+        .parallax {
+            transition: transform 0.1s linear;
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 1024px) {
+            .hero .container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .hero-visual {
+                max-width: 500px;
+                margin: 0 auto;
+            }
+
+            .pains-grid {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+                margin: 0 auto;
+            }
+
+            .offer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .section-title {
+                font-size: 28px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .btn-primary, .btn-secondary {
+                justify-content: center;
+            }
+
+            .final-cta-card {
+                padding: 40px 24px;
+            }
+
+            .final-cta h3 {
+                font-size: 28px;
+            }
+
+            .floating-card {
+                display: none;
+            }
+        }
+
+        /* Counter animation */
+        .counter {
+            display: inline-flex;
+            gap: 4px;
+        }
+
+        .counter-digit {
+            background: var(--wood-dark);
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 20px;
+            font-weight: 700;
+            min-width: 40px;
+            text-align: center;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .counter-separator {
+            display: flex;
+            align-items: center;
+            color: var(--wood-dark);
+            font-weight: 700;
+            font-size: 20px;
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 32px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-indicator span {
+            font-size: 11px;
+            color: var(--text-secondary);
+            opacity: 0.5;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .scroll-mouse {
+            width: 24px;
+            height: 38px;
+            border: 2px solid var(--text-secondary);
+            border-radius: 12px;
+            opacity: 0.3;
+            position: relative;
+        }
+
+        .scroll-mouse::before {
+            content: '';
+            position: absolute;
+            top: 6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 8px;
+            background: var(--text-secondary);
+            border-radius: 2px;
+            animation: scroll-wheel 2s infinite;
+        }
+
+        @keyframes scroll-wheel {
+            0% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(10px); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(8px); }
+        }
+
+        /* ========== MODAL ========== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(44, 24, 16, 0.5);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.35s ease;
+            padding: 24px;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: var(--bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 48px 40px;
+            max-width: 460px;
+            width: 100%;
+            position: relative;
+            transform: translateY(30px) scale(0.95);
+            transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 0 24px 80px rgba(59, 35, 20, 0.2);
+        }
+
+        .modal-overlay.active .modal {
+            transform: translateY(0) scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(59, 35, 20, 0.06);
+            color: var(--text-secondary);
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .modal-close:hover {
+            background: rgba(59, 35, 20, 0.12);
+            color: var(--wood-dark);
+        }
+
+        .modal-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(200, 149, 108, 0.15), rgba(200, 149, 108, 0.05));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .modal h3 {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--wood-dark);
+            margin-bottom: 8px;
+            letter-spacing: -0.3px;
+        }
+
+        .modal-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 28px;
+            line-height: 1.5;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 6px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: 12px;
+            border: 1.5px solid rgba(59, 35, 20, 0.1);
+            background: #fff;
+            font-size: 15px;
+            font-family: inherit;
+            color: var(--text);
+            transition: all 0.25s;
+            outline: none;
+        }
+
+        .form-group input::placeholder {
+            color: #b0a89e;
+        }
+
+        .form-group input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(200, 149, 108, 0.15);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 16px;
+            border-radius: 12px;
+            border: none;
+            background: var(--wood-dark);
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 8px;
+        }
+
+        .form-submit:hover {
+            background: var(--wood-medium);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(59, 35, 20, 0.25);
+        }
+
+        .form-submit:active {
+            transform: translateY(0);
+        }
+
+        .form-note {
+            font-size: 12px;
+            color: var(--text-secondary);
+            opacity: 0.6;
+            text-align: center;
+            margin-top: 14px;
+            line-height: 1.5;
+        }
+
+        .form-success {
+            text-align: center;
+            padding: 20px 0;
+            display: none;
+        }
+
+        .form-success.active {
+            display: block;
+        }
+
+        .form-success-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: rgba(74, 124, 89, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin: 0 auto 16px;
+        }
+
+        .form-success h4 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--wood-dark);
+            margin-bottom: 8px;
+        }
+
+        .form-success p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .form-fields {
+            display: block;
+        }
+
+        .form-fields.hidden {
+            display: none;
+        }
+
+        @media (max-width: 480px) {
+            .modal {
+                padding: 36px 24px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="#" class="logo">Wood<span>Fur</span></a>
+            <ul class="nav-links">
+                <li><a href="#pains">Why Us</a></li>
+                <li><a href="#solutions">Solutions</a></li>
+                <li><a href="#offer">Offer</a></li>
+                <li><a href="#products">Collection</a></li>
+                <li><a href="#guarantee">Guarantee</a></li>
+                <li><a href="javascript:void(0)" class="nav-cta" onclick="openModal()">Place Order</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-bg-gradient parallax" data-speed="0.03"></div>
+        <div class="hero-bg-gradient-2 parallax" data-speed="0.05"></div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge reveal">
+                    <div class="hero-badge-dot"></div>
+                    Autumn Collection 2025
+                </div>
+                <h1 class="reveal reveal-delay-1">
+                    Bring the warmth of <span class="highlight">pure solid wood</span> indoors.
+                </h1>
+                <p class="hero-subtitle reveal reveal-delay-2">
+                    No hidden MDF or toxic glues. Just natural timber that purifies your air and feels alive to the touch.
+                </p>
+                <div class="hero-discount reveal reveal-delay-2">
+                    Autumn discounts on study desks and chairs up to 30%
+                </div>
+                <div class="hero-buttons reveal reveal-delay-3">
+                    <button class="btn-primary" onclick="openModal()">
+                        Place Order
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <a href="#cta" class="btn-secondary">
+                        Book a Call
+                    </a>
+                </div>
+                <p class="hero-microcopy reveal reveal-delay-4">
+                    Includes a free physical wood sample sent to your door before you finalize your order.
+                </p>
+            </div>
+            <div class="hero-visual reveal-right">
+                <div class="hero-image-wrapper">
+                    <img src="oak_table.jpg" alt="Solid Oak Desk" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                </div>
+                <div class="floating-card floating-card-1">
+                    <div class="fc-icon" style="background: rgba(74, 124, 89, 0.1); color: #4A7C59;">✓</div>
+                    <div class="fc-label">Material</div>
+                    <div class="fc-value">100% Solid Oak</div>
+                </div>
+                <div class="floating-card floating-card-2">
+                    <div class="fc-icon" style="background: rgba(200, 149, 108, 0.1); color: #C8956C;">50+</div>
+                    <div class="fc-label">Lifespan</div>
+                    <div class="fc-value">Years Guaranteed</div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-mouse"></div>
+            <span>Scroll</span>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products-section" id="products">
+        <div class="container">
+            <div class="products-header">
+                <div class="section-label reveal">Our Collection</div>
+                <h2 class="section-title reveal reveal-delay-1">Handcrafted furniture, ready to become yours.</h2>
+                <p class="section-desc reveal reveal-delay-2">
+                    Every piece is milled from solid wood in our own workshop. No MDF, no veneer, no shortcuts.
+                </p>
+            </div>
+            <div class="products-grid">
+
+                <!-- Product 1 -->
+                <div class="product-card reveal reveal-delay-1">
+                    <div class="product-image-placeholder">
+                        <img class="product-image" src="https://images.unsplash.com/photo-1782914701565-ab51d55e1479?w=1200&q=80&auto=format&fit=crop" alt="The Timberline Live Edge Walnut Dining Table" loading="lazy">
+                    </div>
+                    <div class="product-body">
+                        <span class="product-category">The Statement Dining Table</span>
+                        <h3>The "Timberline" Live Edge Walnut Dining Table</h3>
+                        <ul class="product-specs">
+                            <li><strong>Material:</strong> Solid Black Walnut</li>
+                            <li><strong>Dimensions:</strong> 84" L x 40" W x 30" H</li>
+                        </ul>
+                        <div class="product-dropdown">
+                            <div class="product-dropdown-inner">
+                                <p class="product-desc">
+                                    Bring the raw beauty of nature into your dining room. Every single table is a one-of-a-kind masterpiece, preserving the natural contours of the wood.
+                                </p>
+                                <ul class="product-features">
+                                    <li><span class="check">✓</span><span><strong>100% Unique:</strong> No two tables are alike. The natural live edge ensures your piece is truly exclusive.</span></li>
+                                    <li><span class="check">✓</span><span><strong>Heirloom Quality:</strong> Crafted from premium, kiln-dried American Black Walnut built to last for generations.</span></li>
+                                    <li><span class="check">✓</span><span><strong>Touchable Finish:</strong> Hand-rubbed with natural organic oil to enhance the rich grain while protecting against daily spills.</span></li>
+                                </ul>
+                                <ul class="product-specs">
+                                    <li><strong>Seating:</strong> Comfortably fits 6-8 chairs</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="product-footer">
+                            <div class="product-price"><del>$2,850</del>$2,450<small>Limited availability</small></div>
+                            <button class="product-cta" onclick="openModal()">Claim Your Unique Piece</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="product-card reveal reveal-delay-2">
+                    <div class="product-image-placeholder">
+                        <img class="product-image" src="https://images.unsplash.com/photo-1697124510322-27ef594f67fd?w=1200&q=80&auto=format&fit=crop" alt="The Oslo Minimalist Solid Oak Coffee Table" loading="lazy">
+                    </div>
+                    <div class="product-body">
+                        <span class="product-category">The Modern Living Room Centerpiece</span>
+                        <h3>The "Oslo" Minimalist Solid Oak Coffee Table</h3>
+                        <ul class="product-specs">
+                            <li><strong>Material:</strong> Solid White Oak</li>
+                            <li><strong>Dimensions:</strong> 48" L x 24" W x 16" H</li>
+                        </ul>
+                        <div class="product-dropdown">
+                            <div class="product-dropdown-inner">
+                                <p class="product-desc">
+                                    Clean lines meet timeless warmth. The Oslo coffee table is designed for the modern home, offering sleek aesthetics without compromising on the solid wood durability you crave.
+                                </p>
+                                <ul class="product-features">
+                                    <li><span class="check">✓</span><span><strong>Scandinavian Elegance:</strong> A minimalist silhouette that elevates your living room without overwhelming the space.</span></li>
+                                    <li><span class="check">✓</span><span><strong>Scratch-Resistant:</strong> Finished with a premium matte polyurethane coat that protects against coffee rings and scratches.</span></li>
+                                    <li><span class="check">✓</span><span><strong>Sturdy & Stable:</strong> Thick, solid white oak top supported by a reinforced geometric base. No wobbling, ever.</span></li>
+                                </ul>
+                                <ul class="product-specs">
+                                    <li><strong>Weight:</strong> 65 lbs (Solid, heavy, and grounded)</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="product-footer">
+                            <div class="product-price">$595<small>Free Shipping Included</small></div>
+                            <button class="product-cta" onclick="openModal()">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="product-card reveal reveal-delay-3">
+                    <div class="product-image-placeholder">
+                        <img class="product-image" src="https://images.unsplash.com/photo-1605886290933-7ed7b3240d4a?w=1200&q=80&auto=format&fit=crop" alt="The Heritage Rustic Farmhouse Kitchen Table" loading="lazy">
+                    </div>
+                    <div class="product-body">
+                        <span class="product-category">The Family Gathering Table</span>
+                        <h3>The "Heritage" Rustic Farmhouse Kitchen Table</h3>
+                        <ul class="product-specs">
+                            <li><strong>Material:</strong> Solid Reclaimed-style Pine</li>
+                            <li><strong>Dimensions:</strong> 72" L x 36" W x 30" H</li>
+                        </ul>
+                        <div class="product-dropdown">
+                            <div class="product-dropdown-inner">
+                                <p class="product-desc">
+                                    The heart of your home deserves a table that gathers everyone around. Rustic, robust, and ready for countless family dinners, homework sessions, and board game nights.
+                                </p>
+                                <ul class="product-features">
+                                    <li><span class="check">✓</span><span><strong>Built for Life:</strong> A thick, solid pine top and a heavy-duty trestle base mean this table can handle everything from hot pots to crafting projects.</span></li>
+                                    <li><span class="check">✓</span><span><strong>Cozy Charm:</strong> Features a hand-distressed finish that gives it an authentic, lived-in warmth from day one.</span></li>
+                                    <li><span class="check">✓</span><span><strong>Kid & Pet Friendly:</strong> The forgiving rustic texture hides minor bumps and scratches, keeping it looking great for years.</span></li>
+                                </ul>
+                                <ul class="product-specs">
+                                    <li><strong>Base Style:</strong> Classic Trestle (No leg-bumping under the table!)</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="product-footer">
+                            <div class="product-price">$895</div>
+                            <button class="product-cta" onclick="openModal()">Bring It Home</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="product-card reveal reveal-delay-1">
+                    <div class="product-image-placeholder">
+                        <img class="product-image" src="https://images.unsplash.com/photo-1705417272217-490f4511abeb?w=1200&q=80&auto=format&fit=crop" alt="The Monarch Executive Solid Wood Desk" loading="lazy">
+                    </div>
+                    <div class="product-body">
+                        <span class="product-category">The Executive Workspace</span>
+                        <h3>The "Monarch" Executive Solid Wood Desk</h3>
+                        <ul class="product-specs">
+                            <li><strong>Material:</strong> Solid Cherry Wood</li>
+                            <li><strong>Dimensions:</strong> 60" W x 30" D x 30" H</li>
+                        </ul>
+                        <div class="product-dropdown">
+                            <div class="product-dropdown-inner">
+                                <p class="product-desc">
+                                    Command your workspace with the prestige of solid wood. The Monarch Desk blends executive luxury with modern ergonomic functionality to elevate your work-from-home experience.
+                                </p>
+                                <ul class="product-features">
+                                    <li><span class="check">✓</span><span><strong>Executive Presence:</strong> Rich, deep cherry wood grain instantly upgrades your home office or professional studio.</span></li>
+                                    <li><span class="check">✓</span><span><strong>Clutter-Free Design:</strong> Features two deep, smooth-gliding drawers to hide away cables, notebooks, and office supplies.</span></li>
+                                    <li><span class="check">✓</span><span><strong>Spacious Surface:</strong> Ample room for dual monitors, a laptop, and your favorite decor, all while feeling incredibly sturdy.</span></li>
+                                </ul>
+                                <ul class="product-specs">
+                                    <li><strong>Storage:</strong> 2x soft-close drawers with dovetail joints</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="product-footer">
+                            <div class="product-price">$1,150<small>5-Year Craftsmanship Warranty</small></div>
+                            <button class="product-cta" onclick="openModal()">Upgrade My Workspace</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 5 -->
+                <div class="product-card reveal reveal-delay-2">
+                    <div class="product-image-placeholder">
+                        <img class="product-image" src="https://images.unsplash.com/photo-1624304314520-8acb626f91f9?w=1200&q=80&auto=format&fit=crop" alt="The Aura Slim Solid Maple Console Table" loading="lazy">
+                    </div>
+                    <div class="product-body">
+                        <span class="product-category">The Space-Saving Entryway</span>
+                        <h3>The "Aura" Slim Solid Maple Console Table</h3>
+                        <ul class="product-specs">
+                            <li><strong>Material:</strong> Solid Hard Maple</li>
+                            <li><strong>Dimensions:</strong> 48" L x 12" W x 32" H</li>
+                        </ul>
+                        <div class="product-dropdown">
+                            <div class="product-dropdown-inner">
+                                <p class="product-desc">
+                                    Make a stunning first impression without sacrificing floor space. The Aura console table is the perfect blend of narrow functionality and breathtaking natural wood grain.
+                                </p>
+                                <ul class="product-features">
+                                    <li><span class="check">✓</span><span><strong>Space-Saving Profile:</strong> Only 12 inches deep — perfect for narrow hallways, entryways, or behind a sofa.</span></li>
+                                    <li><span class="check">✓</span><span><strong>Versatile Styling:</strong> Use it to display family photos, hold your keys, or showcase your favorite indoor plants.</span></li>
+                                    <li><span class="check">✓</span><span><strong>Artisan Crafted:</strong> Tapered legs and a smooth, natural maple finish add a touch of mid-century modern flair to any room.</span></li>
+                                </ul>
+                                <ul class="product-specs">
+                                    <li><strong>Assembly:</strong> Legs attach in under 5 minutes (hardware included)</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="product-footer">
+                            <div class="product-price">$425</div>
+                            <button class="product-cta" onclick="openModal()">Shop The Aura</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Pains Section -->
+    <section class="pains-section" id="pains">
+        <div class="container">
+            <div class="pains-header">
+                <div class="section-label reveal">The Problem</div>
+                <h2 class="section-title reveal reveal-delay-1">The hidden cost of "fake" wood furniture.</h2>
+                <p class="section-desc reveal reveal-delay-2">
+                    Most furniture sold today isn't real wood — it's a chemical cocktail disguised as nature.
+                </p>
+            </div>
+            <div class="pains-grid">
+                <div class="pain-card reveal reveal-delay-1">
+                    <div class="pain-number">01</div>
+                    <h3>The Toxic Air</h3>
+                    <p class="pain-scenario">You buy a sleek, "wood-look" desk for your child.</p>
+                    <p class="pain-consequence">
+                        <strong>The consequence:</strong> The particleboard core off-gasses urea-formaldehyde and chemical glues for years, giving them morning headaches and ruining your indoor air quality.
+                    </p>
+                </div>
+                <div class="pain-card reveal reveal-delay-2">
+                    <div class="pain-number">02</div>
+                    <h3>The Peeling Veneer</h3>
+                    <p class="pain-scenario">A fork scratches your new dining table, or a heavy backpack scuffs the desk.</p>
+                    <p class="pain-consequence">
+                        <strong>The consequence:</strong> The thin paper veneer tears, exposing the ugly, moisture-swollen cardboard core underneath, forcing you to throw it away in 18 months.
+                    </p>
+                </div>
+                <div class="pain-card reveal reveal-delay-3">
+                    <div class="pain-number">03</div>
+                    <h3>The Hollow Feel</h3>
+                    <p class="pain-scenario">You run your hand across your modern furniture.</p>
+                    <p class="pain-consequence">
+                        <strong>The consequence:</strong> It feels cold, hollow, and plasticky, making your home feel like a sterile showroom instead of a warm, natural sanctuary.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solutions Section -->
+    <section class="solutions-section" id="solutions">
+        <div class="container">
+            <div class="solutions-header">
+                <div class="section-label reveal">Our Solution</div>
+                <h2 class="section-title reveal reveal-delay-1">We build pure wood furniture that solves this.</h2>
+            </div>
+            <div class="solutions-list">
+                <div class="solution-card reveal reveal-delay-1">
+                    <div class="solution-icon">🌿</div>
+                    <div class="solution-content">
+                        <h3>Breathe Clean, Natural Air</h3>
+                        <p>
+                            We mill our furniture from kiln-dried solid oak with zero added chemical glues <span class="solution-arrow">→</span> your family breathes clean, natural air and avoids toxic off-gassing.
+                        </p>
+                    </div>
+                </div>
+                <div class="solution-card reveal reveal-delay-2">
+                    <div class="solution-icon">🪵</div>
+                    <div class="solution-content">
+                        <h3>Built to Last 50+ Years</h3>
+                        <p>
+                            We use 1.5-inch thick solid timber sanded all the way through the core <span class="solution-arrow">→</span> you get a surface that can be re-sanded and refinished, lasting 50+ years instead of 18 months.
+                        </p>
+                    </div>
+                </div>
+                <div class="solution-card reveal reveal-delay-3">
+                    <div class="solution-icon">✋</div>
+                    <div class="solution-content">
+                        <h3>Warm, Living Touch</h3>
+                        <p>
+                            We finish every piece with hand-rubbed natural beeswax and linseed oil <span class="solution-arrow">→</span> you get furniture that feels warm to the touch and develops a rich, unique patina over time.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Offer Section -->
+    <section class="offer-section" id="offer">
+        <div class="container">
+            <div class="offer-header">
+                <div class="section-label reveal">Limited Offer</div>
+                <h2 class="section-title reveal reveal-delay-1">
+                    The WoodFur Autumn Solid Wood Collection: Up to 30% Off Study Desks & Chairs
+                </h2>
+            </div>
+            <div class="offer-grid">
+                <div class="offer-card reveal reveal-delay-1">
+                    <h3>
+                        <span class="icon" style="background: rgba(74, 124, 89, 0.1); color: #4A7C59;">✓</span>
+                        What's included in your order
+                    </h3>
+                    <ul class="offer-items">
+                        <li>
+                            <span class="check">✓</span>
+                            <span><strong>100% solid oak or walnut construction:</strong> certified by a physical cross-section sample included in your delivery box so you can verify the grain yourself.</span>
+                        </li>
+                        <li>
+                            <span class="check">✓</span>
+                            <span><strong>Traditional mortise-and-tenon joinery:</strong> we use interlocking wood joints instead of metal screws, meaning your desk will never wobble or loosen over time.</span>
+                        </li>
+                        <li>
+                            <span class="check">✓</span>
+                            <span><strong>3-layer hand-rubbed natural beeswax finish:</strong> no synthetic polyurethanes that crack and peel. Just deep, natural protection that you can easily maintain at home.</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="offer-card deadline-card reveal reveal-delay-2">
+                    <h3>
+                        <span class="icon" style="background: rgba(200, 149, 108, 0.1); color: #C8956C;">⏰</span>
+                        Why the deadline matters
+                    </h3>
+                    <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.7;">
+                        This 30% discount is tied to our autumn timber harvest. We are clearing our workshop floor to make space for the winter walnut batch.
+                    </p>
+                    <div class="deadline-highlight">
+                        This pricing expires exactly at 11:59 PM on October 15th, or when the 50 allocated workshop slots sell out — whichever comes first.
+                    </div>
+                    <div style="margin-top: 20px; text-align: center;">
+                        <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;">Time remaining</div>
+                        <div class="counter" id="countdown">
+                            <div class="counter-digit" id="days">00</div>
+                            <div class="counter-separator">:</div>
+                            <div class="counter-digit" id="hours">00</div>
+                            <div class="counter-separator">:</div>
+                            <div class="counter-digit" id="minutes">00</div>
+                            <div class="counter-separator">:</div>
+                            <div class="counter-digit" id="seconds">00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Guarantee -->
+            <div class="guarantee-section" id="guarantee">
+                <div class="guarantee-card reveal-scale">
+                    <div class="guarantee-badge">🛡️ Zero Risk</div>
+                    <h3>The "Real Wood 200% Guarantee"</h3>
+                    <p>
+                        When your furniture arrives, take the hidden sanding block we include and sand a tiny, hidden spot on the underside. If you see particleboard, MDF, or veneer instead of solid grain, we will <strong>refund you 200% of your purchase price</strong> and pay for the return shipping. Zero risk.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="final-cta" id="cta">
+        <div class="final-cta-bg"></div>
+        <div class="container">
+            <div class="final-cta-card reveal-scale">
+                <h3>Ready to upgrade your home with real wood?</h3>
+                <div class="hero-buttons">
+                    <button class="btn-primary" onclick="openModal()">
+                        Place Order
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <a href="#" class="btn-secondary">
+                        Book a Call
+                    </a>
+                </div>
+                <p class="hero-microcopy">
+                    Includes a free physical wood sample sent to your door before you finalize your order.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2025 WoodFur. Pure Solid Wood Furniture. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Order Modal -->
+    <div class="modal-overlay" id="orderModal">
+        <div class="modal">
+            <button class="modal-close" id="modalClose">✕</button>
+            <div class="modal-icon">🪵</div>
+            <div class="form-fields" id="formFields">
+                <h3>Place Your Order</h3>
+                <p class="modal-subtitle">Fill in your details and we'll send you a free wood sample before you finalize.</p>
+                <form id="orderForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">Name</label>
+                            <input type="text" id="firstName" name="firstName" placeholder="John" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Second Name</label>
+                            <input type="text" id="lastName" name="lastName" placeholder="Smith" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="john@example.com" required>
+                    </div>
+                    <button type="submit" class="form-submit">Send Order Request</button>
+                </form>
+                <p class="form-note">Includes a free physical wood sample sent to your door before you finalize your order.</p>
+            </div>
+            <div class="form-success" id="formSuccess">
+                <div class="form-success-icon">✓</div>
+                <h4>Thank you!</h4>
+                <p>We've received your order request. We'll send a wood sample to your email shortly.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ========== SCROLL REVEAL ==========
+        const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // ========== NAVBAR SCROLL ==========
+        const navbar = document.getElementById('navbar');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // ========== PARALLAX ==========
+        const parallaxElements = document.querySelectorAll('.parallax');
+
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            parallaxElements.forEach(el => {
+                const speed = parseFloat(el.dataset.speed) || 0.03;
+                el.style.transform = `translateY(${scrollY * speed}px)`;
+            });
+        });
+
+        // ========== COUNTDOWN TIMER ==========
+        function updateCountdown() {
+            const deadline = new Date('2025-10-15T23:59:00');
+            const now = new Date();
+            let diff = deadline - now;
+
+            if (diff <= 0) {
+                document.getElementById('days').textContent = '00';
+                document.getElementById('hours').textContent = '00';
+                document.getElementById('minutes').textContent = '00';
+                document.getElementById('seconds').textContent = '00';
+                return;
+            }
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            diff -= days * 1000 * 60 * 60 * 24;
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            diff -= hours * 1000 * 60 * 60;
+            const minutes = Math.floor(diff / (1000 * 60));
+            diff -= minutes * 1000 * 60;
+            const seconds = Math.floor(diff / 1000);
+
+            document.getElementById('days').textContent = String(days).padStart(2, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+
+        // ========== SMOOTH SCROLL FOR ANCHORS ==========
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // ========== MODAL ==========
+        const modal = document.getElementById('orderModal');
+        const modalClose = document.getElementById('modalClose');
+        const orderForm = document.getElementById('orderForm');
+        const formFields = document.getElementById('formFields');
+        const formSuccess = document.getElementById('formSuccess');
+
+        function openModal() {
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        modalClose.addEventListener('click', closeModal);
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        orderForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const data = {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                email: document.getElementById('email').value,
+                timestamp: new Date().toISOString()
+            };
+
+            console.log('Order submitted:', data);
+
+            // ====== GOOGLE SHEETS INTEGRATION ======
+            fetch('https://script.google.com/macros/s/AKfycbwgW2kFwDD34Lef680QeWjwbZCcsbzdt1ED3np2D_vDnFxwOo4QPn9_MLY4k4hcNhYVeA/exec', {
+                method: 'POST',
+                redirect: 'follow',
+                headers: { 'Content-Type': 'text/plain' },
+                body: JSON.stringify(data)
+            }).then(res => res.json()).then(res => {
+                console.log('Server response:', res);
+            }).catch(err => {
+                console.error('Failed to send to Sheets:', err);
+            });
+            // =======================================
+
+            formFields.classList.add('hidden');
+            formSuccess.classList.add('active');
+
+            setTimeout(() => {
+                closeModal();
+                formFields.classList.remove('hidden');
+                formSuccess.classList.remove('active');
+                orderForm.reset();
+            }, 4000);
+        });
+    </script>
+</body>
+</html>
